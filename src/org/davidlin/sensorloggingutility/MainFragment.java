@@ -28,6 +28,8 @@ public class MainFragment extends Fragment {
 	private static EditText sampleRateBox;
 	
 	private static final int SAMPLE_RATE = 1;
+	private static final String START = "Start";
+	private static final String STOP = "Stop";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,11 +84,30 @@ public class MainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if (isStarted) {
+					// Set button text to Start
+					startStopButton.setText(START);
+					
+					// Stop background thread
 					
 				} else {
 					Log.d(MainActivity.LOGTAG, "Temperature selected: " + isTempSelected);
 					Log.d(MainActivity.LOGTAG, "Battery selected: " + isBatterySelected);
 					Log.d(MainActivity.LOGTAG, "CPU frequency selected: " + isCpufreqSelected);
+					Log.d(MainActivity.LOGTAG, "Sampling rate: " + sampleRateBox.getText());
+					Log.d(MainActivity.LOGTAG, "CSV filename: " + csvFilenameBox.getText());
+					
+					// Set button text to Stop
+					startStopButton.setText(STOP);
+					
+					// Convert samples per second into milliseconds
+					double desiredSampleRate = Double.valueOf(sampleRateBox.getText().toString());
+					if (desiredSampleRate <= 0) {
+						// Throw error
+					}
+					int sampleRate = 1000 / (int) desiredSampleRate;
+					
+					// Start background thread
+					
 				}
 			}
 		});

@@ -123,7 +123,7 @@
         android:layout_toRightOf="@+id/textView2"
         android:ems="10"
         android:gravity="center_vertical|center_horizontal"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:scrollHorizontally="false"
         android:textSize="13dp" />
 
