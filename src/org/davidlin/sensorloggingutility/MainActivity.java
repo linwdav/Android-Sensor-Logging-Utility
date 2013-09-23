@@ -13,7 +13,7 @@ import android.view.Menu;
 
 public class MainActivity extends FragmentActivity {
 
-	public final String LOGTAG = "org.davidlin";
+	public static final String LOGTAG = "org.davidlin";
 	List<Fragment> tabFragments;
 
 	@Override
@@ -57,7 +57,6 @@ public class MainActivity extends FragmentActivity {
 				Bundle args = new Bundle();
 				args.putInt("", tab.getPosition());
 				fragment.setArguments(args);
-				//getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, fragment).commit();
 				getSupportFragmentManager().beginTransaction().add(R.id.fragment1, fragment).commit();
 			}
 

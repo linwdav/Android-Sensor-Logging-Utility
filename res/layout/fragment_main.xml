@@ -8,8 +8,8 @@
         android:id="@+id/cbBattery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvTemperature"
-        android:layout_below="@+id/tvTemperature"
+        android:layout_alignLeft="@+id/cbTemperature"
+        android:layout_below="@+id/cbTemperature"
         android:text="Battery level" />
 
     <CheckBox
@@ -21,7 +21,7 @@
         android:text="CPU frequency" />
 
     <CheckBox
-        android:id="@+id/tvTemperature"
+        android:id="@+id/cbTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
@@ -37,7 +37,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/cbCpufreq"
         android:layout_marginTop="15dp"
-        android:text="Polling options"
+        android:text="Sampling rate"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 
@@ -48,7 +48,7 @@
         android:layout_alignLeft="@+id/cbCpufreq"
         android:layout_below="@+id/TextView01"
         android:layout_marginTop="15dp"
-        android:text="Frequency (ms)"
+        android:text="Samples per second"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="16dp" />
 
@@ -75,20 +75,6 @@
         android:textSize="16dp" />
 
     <EditText
-        android:id="@+id/etPollingfreq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/cbBattery"
-        android:ems="10"
-        android:gravity="center_vertical|center_horizontal"
-        android:inputType="number"
-        android:scrollHorizontally="false"
-        android:textSize="13dp" />
-
-    <EditText
         android:id="@+id/etCsvfilename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,7 +85,9 @@
         android:layout_marginLeft="14dp"
         android:ems="10"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="13dp" >
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:textSize="10dp" >
 
         <requestFocus />
     </EditText>
@@ -124,5 +112,19 @@
         android:minWidth="100dp"
         android:text="Start"
         android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etSamplerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/textView2"
+        android:ems="10"
+        android:gravity="center_vertical|center_horizontal"
+        android:inputType="number"
+        android:scrollHorizontally="false"
+        android:textSize="13dp" />
 
 </RelativeLayout>
