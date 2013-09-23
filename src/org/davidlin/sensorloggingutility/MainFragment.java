@@ -97,14 +97,37 @@ public class MainFragment extends Fragment {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		String year = String.valueOf(cal.get(Calendar.YEAR));
-		String month = String.valueOf(cal.get(Calendar.MONTH));
-		String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-		String hour = String.valueOf(cal.get(Calendar.HOUR_OF_DAY));
-		String minute = String.valueOf(cal.get(Calendar.MINUTE));
-		String second = String.valueOf(cal.get(Calendar.SECOND));
 		
-		String csvName = "sensorlog_" + year + month + day + "_" + hour + minute + second + ".csv";
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH) + 1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minute = cal.get(Calendar.MINUTE);
+		int second = cal.get(Calendar.SECOND);
+		
+		String monthString = String.valueOf(month);
+		String dayString = String.valueOf(day);
+		String hourString = String.valueOf(hour);
+		String minuteString = String.valueOf(minute);
+		String secondString = String.valueOf(second);
+		
+		if (month < 10) {
+			monthString = "0" + month;
+		}
+		if (day < 10) {
+			dayString = "0" + day;
+		}
+		if (hour < 10) {
+			hourString = "0" + hour;
+		}
+		if (minute < 10) {
+			minuteString = "0" + minute;
+		}
+		if (second < 10) {
+			secondString = "0" + second;
+		}
+		
+		String csvName = "sensorlog_" + year + monthString + dayString + "_" + hourString + minuteString + secondString + ".csv";
 		return csvName;
 	}
 	
