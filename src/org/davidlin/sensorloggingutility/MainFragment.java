@@ -17,11 +17,11 @@ import android.widget.EditText;
 public class MainFragment extends Fragment {
 	
 	private static boolean isStarted = false;
-	private static boolean isTempSelected;
+	private static boolean isCputempSelected;
 	private static boolean isBatterySelected;
 	private static boolean isCpufreqSelected;
 	private static Button startStopButton;
-	private static CheckBox tempCheckBox;
+	private static CheckBox cpuTempCheckBox;
 	private static CheckBox batteryCheckBox;
 	private static CheckBox cpuFreqCheckBox;
 	private static EditText csvFilenameBox;
@@ -43,14 +43,14 @@ public class MainFragment extends Fragment {
 		sampleRateBox = (EditText) view.findViewById(R.id.etSamplerate);
 		sampleRateBox.setText(String.valueOf(SAMPLE_RATE));
 		
-		tempCheckBox = (CheckBox) view.findViewById(R.id.cbTemperature);
-		tempCheckBox.setOnClickListener(new OnClickListener() {
+		cpuTempCheckBox = (CheckBox) view.findViewById(R.id.cbCputemp);
+		cpuTempCheckBox.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (tempCheckBox.isChecked()) {
-					isTempSelected = true;
+				if (cpuTempCheckBox.isChecked()) {
+					isCputempSelected = true;
 				} else {
-					isTempSelected = false;
+					isCputempSelected = false;
 				}
 			}
 		});
@@ -90,7 +90,7 @@ public class MainFragment extends Fragment {
 					// Stop background thread
 					
 				} else {
-					Log.d(MainActivity.LOGTAG, "Temperature selected: " + isTempSelected);
+					Log.d(MainActivity.LOGTAG, "Temperature selected: " + isCputempSelected);
 					Log.d(MainActivity.LOGTAG, "Battery selected: " + isBatterySelected);
 					Log.d(MainActivity.LOGTAG, "CPU frequency selected: " + isCpufreqSelected);
 					Log.d(MainActivity.LOGTAG, "Sampling rate: " + sampleRateBox.getText());
@@ -106,7 +106,7 @@ public class MainFragment extends Fragment {
 					}
 					int sampleRate = 1000 / (int) desiredSampleRate;
 					
-					// Start background thread
+					// Start background thread to get sensor data
 					
 				}
 			}

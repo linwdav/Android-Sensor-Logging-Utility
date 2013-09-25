@@ -5,41 +5,14 @@
     android:layout_height="fill_parent" >
 
     <CheckBox
-        android:id="@+id/cbBattery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cbTemperature"
-        android:layout_below="@+id/cbTemperature"
-        android:text="Battery level" />
-
-    <CheckBox
-        android:id="@+id/cbCpufreq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cbBattery"
-        android:layout_below="@+id/cbBattery"
-        android:text="CPU frequency" />
-
-    <CheckBox
-        android:id="@+id/cbTemperature"
+        android:id="@+id/cbCputemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginLeft="21dp"
         android:layout_marginTop="14dp"
-        android:text="Temperature" />
-
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/cbCpufreq"
-        android:layout_marginTop="15dp"
-        android:text="Sampling rate"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
+        android:text="CPU temperature" />
 
     <TextView
         android:id="@+id/textView2"
@@ -126,5 +99,32 @@
         android:inputType="numberDecimal"
         android:scrollHorizontally="false"
         android:textSize="13dp" />
+
+    <CheckBox
+        android:id="@+id/cbCpufreq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cbCputemp"
+        android:layout_below="@+id/cbCputemp"
+        android:text="CPU frequency" />
+
+    <CheckBox
+        android:id="@+id/cbBattery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cbCpufreq"
+        android:layout_below="@+id/cbCpufreq"
+        android:text="Battery level" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/cbBattery"
+        android:layout_marginTop="14dp"
+        android:text="Sampling rate"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold" />
 
 </RelativeLayout>
