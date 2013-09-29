@@ -6,6 +6,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -14,12 +15,15 @@ import android.view.Menu;
 public class MainActivity extends FragmentActivity {
 
 	public static final String LOGTAG = "org.davidlin";
+	public static Context context;
+	
 	List<Fragment> tabFragments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		context = this.getApplicationContext();
 		setupActionBar();
 	}
 
@@ -36,7 +40,6 @@ public class MainActivity extends FragmentActivity {
 		tabFragments.add(new MainFragment());
 		tabFragments.add(new SetFreqFragment());
 		tabFragments.add(new ScriptFragment());
-		
 		// Obtain action bar
 		final ActionBar actionBar = getActionBar();
 		// Set action bar to tab mode
