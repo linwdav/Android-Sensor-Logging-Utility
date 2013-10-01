@@ -7,6 +7,9 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -111,7 +114,10 @@ public class MainFragment extends Fragment {
 					int sampleRate = 1000 / (int) desiredSampleRate;
 					
 					// Start background thread to get sensor data
-					
+					IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+					Intent batteryStatus = MainActivity.context.registerReceiver(null, ifilter);
+					int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+					Log.d(MainActivity.LOGTAG, "Battery percent is " + level);
 				}
 			}
 		});
