@@ -1,18 +1,10 @@
 package org.davidlin.sensorloggingutility;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.io.FileUtils;
-
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +15,6 @@ import android.widget.EditText;
 
 public class MainFragment extends Fragment {
 	
-	private static boolean isStarted = false;
 	private static boolean isCputempSelected;
 	private static boolean isBatterySelected;
 	private static boolean isCpufreqSelected;
@@ -90,18 +81,20 @@ public class MainFragment extends Fragment {
 		startStopButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (isStarted) {
+				if (SensorDataCollector.isRunning) {
 					// Set button text to Start
 					startStopButton.setText(START);
-					
 					// Stop background thread
-					
+					SensorDataCollector.isRunning = false;
 				} else {
+					/*
 					Log.d(MainActivity.LOGTAG, "Temperature selected: " + isCputempSelected);
 					Log.d(MainActivity.LOGTAG, "Battery selected: " + isBatterySelected);
 					Log.d(MainActivity.LOGTAG, "CPU frequency selected: " + isCpufreqSelected);
 					Log.d(MainActivity.LOGTAG, "Sampling rate: " + sampleRateBox.getText());
 					Log.d(MainActivity.LOGTAG, "CSV filename: " + csvFilenameBox.getText());
+					*/
+					SensorDataCollector.isRunning = true;
 					
 					// Set button text to Stop
 					startStopButton.setText(STOP);
@@ -114,10 +107,8 @@ public class MainFragment extends Fragment {
 					int sampleRate = 1000 / (int) desiredSampleRate;
 					
 					// Start background thread to get sensor data
-					IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-					Intent batteryStatus = MainActivity.context.registerReceiver(null, ifilter);
-					int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-					Log.d(MainActivity.LOGTAG, "Battery percent is " + level);
+					SensorDataCollector sdc = new SensorDataCollector(sampleRate, csvFilenameBox.getText().toString(), isCputempSelected, isCpufreqSelected, isBatterySelected);
+					sdc.run();
 				}
 			}
 		});
