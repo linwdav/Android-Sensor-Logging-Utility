@@ -5,6 +5,7 @@ import java.util.Date;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +25,9 @@ public class MainFragment extends Fragment {
 	private static CheckBox cpuFreqCheckBox;
 	private static EditText csvFilenameBox;
 	private static EditText sampleRateBox;
+	
+	private static Thread dataCollectorThread = null;
+	private static SensorDataCollector sdc = null;
 	
 	private static final int SAMPLE_RATE = 1;
 	private static final String START = "Start";
@@ -81,34 +85,33 @@ public class MainFragment extends Fragment {
 		startStopButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (SensorDataCollector.isRunning) {
-					// Set button text to Start
-					startStopButton.setText(START);
-					// Stop background thread
-					SensorDataCollector.isRunning = false;
-				} else {
-					/*
-					Log.d(MainActivity.LOGTAG, "Temperature selected: " + isCputempSelected);
-					Log.d(MainActivity.LOGTAG, "Battery selected: " + isBatterySelected);
-					Log.d(MainActivity.LOGTAG, "CPU frequency selected: " + isCpufreqSelected);
-					Log.d(MainActivity.LOGTAG, "Sampling rate: " + sampleRateBox.getText());
-					Log.d(MainActivity.LOGTAG, "CSV filename: " + csvFilenameBox.getText());
-					*/
-					SensorDataCollector.isRunning = true;
-					
+				
+				if (sdc == null && dataCollectorThread == null) {
 					// Set button text to Stop
 					startStopButton.setText(STOP);
-					
 					// Convert samples per second into milliseconds
 					double desiredSampleRate = Double.valueOf(sampleRateBox.getText().toString());
 					if (desiredSampleRate <= 0) {
 						// Throw error
 					}
 					int sampleRate = 1000 / (int) desiredSampleRate;
-					
-					// Start background thread to get sensor data
-					SensorDataCollector sdc = new SensorDataCollector(sampleRate, csvFilenameBox.getText().toString(), isCputempSelected, isCpufreqSelected, isBatterySelected);
-					sdc.run();
+					sdc = new SensorDataCollector(sampleRate, csvFilenameBox.getText().toString(), isCputempSelected, isCpufreqSelected, isBatterySelected);
+					sdc.isRunning = true;
+					dataCollectorThread = new Thread(sdc);
+					dataCollectorThread.start();
+				}
+				else {
+					// Set button text to Start
+					startStopButton.setText(START);
+					sdc.isRunning = false;
+					try {
+						dataCollectorThread.join();
+						Log.d(MainActivity.LOGTAG, "Thread stopped");
+						sdc = null;
+						dataCollectorThread = null;
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});

@@ -60,7 +60,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:maxLines="1"
         android:scrollHorizontally="true"
-        android:textSize="10dp" >
+        android:textSize="10sp" >
 
         <requestFocus />
     </EditText>
@@ -98,7 +98,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:inputType="numberDecimal"
         android:scrollHorizontally="false"
-        android:textSize="13dp" />
+        android:textSize="13sp" />
 
     <CheckBox
         android:id="@+id/cbCpufreq"

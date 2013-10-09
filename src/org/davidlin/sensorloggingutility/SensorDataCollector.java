@@ -19,7 +19,7 @@ public class SensorDataCollector implements Runnable {
 
 	private static final int MAX_CORES = 8;
 	
-	public static volatile boolean isRunning = false;
+	public volatile boolean isRunning = false;
 
 	private int sampleRate;
 	private String csvFilename;
