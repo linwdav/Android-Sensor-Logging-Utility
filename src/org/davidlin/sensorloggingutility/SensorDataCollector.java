@@ -86,6 +86,9 @@ public class SensorDataCollector implements Runnable {
 
 				entries = s.toString().split(",");
 				writer.writeNext(entries);
+				
+				Log.d(MainActivity.LOGTAG, "Logging, one loop");
+				
 				Thread.sleep(sampleRate);
 			}
 			writer.close();

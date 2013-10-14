@@ -9,7 +9,6 @@ import android.app.ActionBar.Tab;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 
 public class MainActivity extends FragmentActivity {
@@ -33,6 +32,11 @@ public class MainActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
+	}
 
 	private void setupActionBar() {
 		// Add tab fragments into list
@@ -49,13 +53,13 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onTabReselected(Tab tab, android.app.FragmentTransaction ft) {
-				Log.d(LOGTAG, "onTabReselected");
+				//Log.d(LOGTAG, "onTabReselected");
 			}
 
 			@Override
 			public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {
-				Log.d(LOGTAG, "onTabSelected");
-				Log.d(LOGTAG, "The tab position is " + tab.getPosition());
+				//Log.d(LOGTAG, "onTabSelected");
+				//Log.d(LOGTAG, "The tab position is " + tab.getPosition());
 				Fragment fragment = tabFragments.get(tab.getPosition());
 				Bundle args = new Bundle();
 				args.putInt("", tab.getPosition());
@@ -65,7 +69,7 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
-				Log.d(LOGTAG, "onTabUnselected");
+				//Log.d(LOGTAG, "onTabUnselected");
 				getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment1)).commit();
 			}
 		};
