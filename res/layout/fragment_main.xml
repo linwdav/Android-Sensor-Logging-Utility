@@ -1,130 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_main"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <CheckBox
-        android:id="@+id/cbCputemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="14dp"
-        android:text="CPU temperature" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cbCpufreq"
-        android:layout_below="@+id/TextView01"
-        android:layout_marginTop="15dp"
-        android:text="Samples per second"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="16dp" />
-
-    <TextView
-        android:id="@+id/TextView03"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextView01"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="15dp"
-        android:text="Save to CSV file"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/TextView03"
-        android:layout_marginTop="14dp"
-        android:text="Filename"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="16dp" />
-
-    <EditText
-        android:id="@+id/etCsvfilename"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextView02"
-        android:layout_alignBottom="@+id/TextView02"
-        android:layout_alignLeft="@+id/btStartstop"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="14dp"
-        android:ems="10"
-        android:gravity="center_vertical|center_horizontal"
-        android:maxLines="1"
-        android:scrollHorizontally="true"
-        android:textSize="10sp" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Select sensor data"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btStartstop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etCsvfilename"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:minWidth="100dp"
-        android:text="Start"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/etSamplerate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/textView2"
-        android:ems="10"
-        android:gravity="center_vertical|center_horizontal"
-        android:inputType="numberDecimal"
-        android:scrollHorizontally="false"
-        android:textSize="13sp" />
-
-    <CheckBox
-        android:id="@+id/cbCpufreq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cbCputemp"
-        android:layout_below="@+id/cbCputemp"
-        android:text="CPU frequency" />
-
-    <CheckBox
-        android:id="@+id/cbBattery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cbCpufreq"
-        android:layout_below="@+id/cbCpufreq"
-        android:text="Battery level" />
-
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/cbBattery"
-        android:layout_marginTop="14dp"
-        android:text="Sampling rate"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
-
-</RelativeLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<RelativeLayout
+	    android:id="@+id/fragment_main"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" >
+	
+	    <CheckBox
+	        android:id="@+id/cbCputemp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/textView1"
+	        android:layout_below="@+id/textView1"
+	        android:layout_marginLeft="21dp"
+	        android:layout_marginTop="14dp"
+	        android:text="CPU temperature" />
+	
+	    <TextView
+	        android:id="@+id/textView2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/cbCpufreq"
+	        android:layout_below="@+id/TextView01"
+	        android:layout_marginTop="15dp"
+	        android:text="Samples per second"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textSize="16sp" />
+	
+	    <TextView
+	        android:id="@+id/TextView03"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/TextView01"
+	        android:layout_below="@+id/textView2"
+	        android:layout_marginTop="15dp"
+	        android:text="Save to CSV file"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textStyle="bold" />
+	
+	    <TextView
+	        android:id="@+id/TextView02"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/textView2"
+	        android:layout_below="@+id/TextView03"
+	        android:layout_marginTop="14dp"
+	        android:text="Filename"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textSize="16sp" />
+	
+	    <EditText
+	        android:id="@+id/etCsvfilename"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/TextView02"
+	        android:layout_alignBottom="@+id/TextView02"
+	        android:layout_alignLeft="@+id/btStartstop"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginLeft="14dp"
+	        android:ems="10"
+	        android:gravity="center_vertical|center_horizontal"
+	        android:maxLines="1"
+	        android:scrollHorizontally="true"
+	        android:textSize="10sp" >
+	
+	        <requestFocus />
+	    </EditText>
+	
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:text="Select sensor data"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textStyle="bold" />
+	
+	    <Button
+	        android:id="@+id/btStartstop"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/etCsvfilename"
+	        android:layout_centerHorizontal="true"
+	        android:layout_margin="20dp"
+	        android:minWidth="100dp"
+	        android:text="Start"
+	        android:textStyle="bold" />
+	
+	    <EditText
+	        android:id="@+id/etSamplerate"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/textView2"
+	        android:layout_alignBottom="@+id/textView2"
+	        android:layout_marginLeft="16dp"
+	        android:layout_toRightOf="@+id/textView2"
+	        android:ems="10"
+	        android:gravity="center_vertical|center_horizontal"
+	        android:inputType="numberDecimal"
+	        android:scrollHorizontally="false"
+	        android:textSize="13sp" />
+	
+	    <CheckBox
+	        android:id="@+id/cbCpufreq"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/cbCputemp"
+	        android:layout_below="@+id/cbCputemp"
+	        android:text="CPU frequency" />
+	
+	    <CheckBox
+	        android:id="@+id/cbBattery"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/cbCpufreq"
+	        android:layout_below="@+id/cbCpufreq"
+	        android:text="Battery level" />
+	
+	    <TextView
+	        android:id="@+id/TextView01"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/cbBattery"
+	        android:layout_marginTop="14dp"
+	        android:text="Sampling rate"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textStyle="bold" />
+	
+	</RelativeLayout>
+</ScrollView>

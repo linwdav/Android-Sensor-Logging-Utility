@@ -34,8 +34,8 @@ public final class R {
         public static final int cbCputemp=0x7f080002;
         public static final int etCsvfilename=0x7f080009;
         public static final int etSamplerate=0x7f08000b;
-        public static final int fragment1=0x7f080000;
         public static final int fragment_main=0x7f080001;
+        public static final int framelayout_mainfragment=0x7f080000;
         public static final int textView1=0x7f080003;
         public static final int textView2=0x7f080004;
     }

@@ -1,7 +1,11 @@
-package org.davidlin.sensorloggingutility;
+package org.davidlin.sensorloggingutility.fragments;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import org.davidlin.sensorloggingutility.MainActivity;
+import org.davidlin.sensorloggingutility.R;
+import org.davidlin.sensorloggingutility.SensorDataCollector;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -21,74 +25,74 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements OnClickListener {
 	
-	private static boolean isCputempSelected;
-	private static boolean isBatterySelected;
-	private static boolean isCpufreqSelected;
-	private static Button startStopButton;
-	private static CheckBox cpuTempCheckBox;
-	private static CheckBox batteryCheckBox;
-	private static CheckBox cpuFreqCheckBox;
-	private static EditText csvFilenameBox;
-	private static EditText sampleRateBox;
+	private boolean isCputempSelected;
+	private boolean isBatterySelected;
+	private boolean isCpufreqSelected;
+	private Button startStopButton;
+	private CheckBox cpuTempCheckBox;
+	private CheckBox batteryCheckBox;
+	private CheckBox cpuFreqCheckBox;
+	private EditText csvFilenameBox;
+	private EditText sampleRateBox;
 	private View mainFragmentView;
 	private String savedFilename;
+	private Context context;
 	
 	private static Thread dataCollectorThread = null;
 	private static SensorDataCollector sdc = null;
 	
-	private static final int SAMPLE_RATE = 1;
-	private static final String START = "Start";
-	private static final String STOP = "Stop";
-	private static final int NOTIFICATION_ID = 999;
+	private final int SAMPLE_RATE = 1;
+	private final String START = "Start";
+	private final String STOP = "Stop";
+	private final int NOTIFICATION_ID = 999;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mainFragmentView = inflater.inflate(R.layout.fragment_main, container, false);
-		
+		context = mainFragmentView.getContext();
+		setupViews();
+		return mainFragmentView;
+	}
+	
+	private void setupViews() {
 		cpuTempCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbCputemp);
-		cpuTempCheckBox.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (cpuTempCheckBox.isChecked()) {
+		batteryCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbBattery);
+		cpuFreqCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbCpufreq);
+		startStopButton = (Button) mainFragmentView.findViewById(R.id.btStartstop);
+		cpuTempCheckBox.setOnClickListener(this);
+		batteryCheckBox.setOnClickListener(this);
+		cpuFreqCheckBox.setOnClickListener(this);
+		startStopButton.setOnClickListener(this);
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+        	case R.id.cbCputemp:
+        		if (cpuTempCheckBox.isChecked()) {
 					isCputempSelected = true;
 				} else {
 					isCputempSelected = false;
 				}
-			}
-		});
-		
-		batteryCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbBattery);
-		batteryCheckBox.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (batteryCheckBox.isChecked()) {
+        		break;
+        	case R.id.cbBattery:
+        		if (batteryCheckBox.isChecked()) {
 					isBatterySelected = true;
 				} else {
 					isBatterySelected = false;
 				}
-			}
-		});
-		
-		cpuFreqCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbCpufreq);
-		cpuFreqCheckBox.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (cpuFreqCheckBox.isChecked()) {
+        		break;
+        	case R.id.cbCpufreq:
+        		if (cpuFreqCheckBox.isChecked()) {
 					isCpufreqSelected = true;
 				} else {
 					isCpufreqSelected = false;
 				}
-			}
-		});
-		
-		startStopButton = (Button) mainFragmentView.findViewById(R.id.btStartstop);
-		startStopButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				if (sdc == null && dataCollectorThread == null) {
+        		break;
+        	case R.id.btStartstop:
+        		if (sdc == null && dataCollectorThread == null) {
 					disableOptions();
 					// Set button text to Stop
 					startStopButton.setText(STOP);
@@ -99,18 +103,17 @@ public class MainFragment extends Fragment {
 					}
 					int sampleRate = (int) (1000 / desiredSampleRate);
 					savedFilename = csvFilenameBox.getText().toString();
-					sdc = new SensorDataCollector(sampleRate, savedFilename, isCputempSelected, isCpufreqSelected, isBatterySelected);
+					sdc = new SensorDataCollector(context, sampleRate, savedFilename, isCputempSelected, isCpufreqSelected, isBatterySelected);
 					sdc.isRunning = true;
 					dataCollectorThread = new Thread(sdc);
 					dataCollectorThread.start();
-					Toast toast = Toast.makeText(MainActivity.context, "Writing data to " + savedFilename, Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(context, "Writing data to " + savedFilename, Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.BOTTOM, 0, 0);
 					toast.setDuration(Toast.LENGTH_LONG);
 					toast.show();
 					
 					addNotification();
-				}
-				else {
+				} else {
 					// Set button text to Start
 					startStopButton.setText(START);
 					sdc.isRunning = false;
@@ -119,7 +122,7 @@ public class MainFragment extends Fragment {
 						sdc = null;
 						dataCollectorThread = null;
 						
-						Toast toast = Toast.makeText(MainActivity.context, "Data saved to " + savedFilename, Toast.LENGTH_SHORT);
+						Toast toast = Toast.makeText(context, "Data saved to " + savedFilename, Toast.LENGTH_SHORT);
 						toast.setGravity(Gravity.BOTTOM, 0, 0);
 						toast.setDuration(Toast.LENGTH_LONG);
 						toast.show();
@@ -134,9 +137,8 @@ public class MainFragment extends Fragment {
 					enableOptions();
 					removeNotification();
 				}
-			}
-		});
-		return mainFragmentView;
+        		break;
+        }
 	}
 	
 	@Override
@@ -154,7 +156,6 @@ public class MainFragment extends Fragment {
 	}
 	
 	private void addNotification() {
-		Context context = MainActivity.context;
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher);      
 
 		Intent intent = new Intent(context, MainActivity.class);
@@ -170,7 +171,7 @@ public class MainFragment extends Fragment {
 	}
 	
 	private void removeNotification() {
-		NotificationManager mNotificationManager = (NotificationManager) MainActivity.context.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.cancel(NOTIFICATION_ID);
 	}
 	

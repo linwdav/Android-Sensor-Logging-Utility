@@ -9,6 +9,7 @@ import java.util.Date;
 import org.apache.commons.io.FileUtils;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
@@ -27,10 +28,10 @@ public class SensorDataCollector implements Runnable {
 	private boolean includeCputemp;
 	private boolean includeCpufreq;
 	private boolean includeBattery;
+	private Context context;
 
-	public SensorDataCollector(int sampleRate, String csvFilename,
-			boolean includeCputemp, boolean includeCpufreq,
-			boolean includeBattery) {
+	public SensorDataCollector(Context context, int sampleRate, String csvFilename, boolean includeCputemp, boolean includeCpufreq, boolean includeBattery) {
+		this.context = context;
 		this.sampleRate = sampleRate;
 		this.csvFilename = csvFilename;
 		this.includeCputemp = includeCputemp;
@@ -40,6 +41,9 @@ public class SensorDataCollector implements Runnable {
 
 	@SuppressLint("SimpleDateFormat")
 	@Override
+	/**
+	 * Read sensor values in periodic intervals and write to csv file.
+	 */
 	public void run() {
 		// Read values and write to csv file
 		File sdCard = Environment.getExternalStorageDirectory();
@@ -79,15 +83,12 @@ public class SensorDataCollector implements Runnable {
 
 				if (includeBattery) {
 					s.append(getBatteryLevel() + ",");
-				}
-				else {
+				} else {
 					s.append("N/A");
 				}
 
 				entries = s.toString().split(",");
 				writer.writeNext(entries);
-				
-				Log.d(MainActivity.LOGTAG, "Logging, one loop");
 				
 				Thread.sleep(sampleRate);
 			}
@@ -116,7 +117,7 @@ public class SensorDataCollector implements Runnable {
 				e.printStackTrace();
 			}
 		} else {
-			Log.d(MainActivity.LOGTAG, "Temp file not found");
+			Log.d("org.davidlin.sensor", "Temp file not found");
 		}
 		return cpuTemp;
 	}
@@ -152,7 +153,7 @@ public class SensorDataCollector implements Runnable {
 	 */
 	public int getBatteryLevel() {
 		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-		Intent batteryStatus = MainActivity.context.registerReceiver(null,
+		Intent batteryStatus = context.registerReceiver(null,
 				ifilter);
 		int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 		return level;
