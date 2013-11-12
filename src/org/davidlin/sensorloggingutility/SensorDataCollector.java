@@ -22,6 +22,7 @@ public class SensorDataCollector implements Runnable {
 	private static final int MAX_CORES = 8;
 
 	public volatile boolean isRunning = false;
+	private final Object lockObj = new Object();
 
 	private int sampleRate;
 	private String csvFilename;
@@ -61,6 +62,7 @@ public class SensorDataCollector implements Runnable {
 			double[] cpuFreq;
 			
 			while (isRunning) {
+				Log.d("org.davidlin.sensor", "Executing data collecting loop");
 				StringBuilder s = new StringBuilder();
 				s.append(sdf.format(new Date()) + ",");
 
@@ -90,13 +92,23 @@ public class SensorDataCollector implements Runnable {
 				entries = s.toString().split(",");
 				writer.writeNext(entries);
 				
-				Thread.sleep(sampleRate);
+				synchronized(lockObj) {
+					if (isRunning) {
+						lockObj.wait(sampleRate);
+					}
+				}
 			}
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			// Do nothing, continue
+		}
+	}
+	
+	public void stop() {
+		synchronized(lockObj) {
+			lockObj.notify();
 		}
 	}
 
@@ -158,5 +170,5 @@ public class SensorDataCollector implements Runnable {
 		int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 		return level;
 	}
-
+	
 }

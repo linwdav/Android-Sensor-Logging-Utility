@@ -12,6 +12,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -96,6 +97,8 @@ public class MainFragment extends Fragment implements OnClickListener {
 					disableOptions();
 					// Set button text to Stop
 					startStopButton.setText(STOP);
+					// Turn fragment background Red
+					mainFragmentView.findViewById(R.id.fragment_main).setBackgroundColor(Color.RED);
 					// Convert samples per second into milliseconds
 					double desiredSampleRate = Double.valueOf(sampleRateBox.getText().toString());
 					if (desiredSampleRate <= 0) {
@@ -116,8 +119,11 @@ public class MainFragment extends Fragment implements OnClickListener {
 				} else {
 					// Set button text to Start
 					startStopButton.setText(START);
+					// Turn fragment background White
+					mainFragmentView.findViewById(R.id.fragment_main).setBackgroundColor(Color.WHITE);
 					sdc.isRunning = false;
 					try {
+						sdc.stop();
 						dataCollectorThread.join();
 						sdc = null;
 						dataCollectorThread = null;
