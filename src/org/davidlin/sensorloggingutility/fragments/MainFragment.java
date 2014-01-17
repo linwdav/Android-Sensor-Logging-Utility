@@ -108,19 +108,23 @@ public class MainFragment extends Fragment implements OnClickListener {
         		break;
         	case R.id.btStartstop:
         		if (sdc == null && dataCollectorThread == null) {
-        			savedFilename = csvFilenameBox.getText().toString();
-        			if (savedFilename.isEmpty()) {
-        				showToast("Type in filename", Toast.LENGTH_LONG);
+        			if (sampleRateBox.getText().toString().isEmpty()) {
+        				showToast("Sample rate cannot be empty", Toast.LENGTH_LONG);
     					break;
         			}
-        			
-					// Convert samples per second into milliseconds
+        			// Convert samples per second into milliseconds
 					double desiredSampleRate = Double.valueOf(sampleRateBox.getText().toString());
 					if (desiredSampleRate <= 0) {
 						showToast("Sample rate must be greater than 0", Toast.LENGTH_LONG);
     					break;
 					}
 					int sampleRate = (int) (1000 / desiredSampleRate);
+					
+					savedFilename = csvFilenameBox.getText().toString();
+        			if (savedFilename.isEmpty()) {
+        				showToast("Filename cannot be empty", Toast.LENGTH_LONG);
+    					break;
+        			}
 					
 					disableOptions();
 					// Set button text to Stop

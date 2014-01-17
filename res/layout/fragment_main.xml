@@ -90,6 +90,7 @@
 	        android:ems="10"
 	        android:gravity="center_vertical|center_horizontal"
 	        android:inputType="numberDecimal"
+	        android:imeOptions="actionDone"
 	        android:scrollHorizontally="false"
 	        android:textSize="13sp" />
 	
