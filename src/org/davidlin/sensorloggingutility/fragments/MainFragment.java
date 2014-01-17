@@ -64,12 +64,12 @@ public class MainFragment extends Fragment implements OnClickListener {
 		cpuFreqCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbCpufreq);
 		defaultFilenameCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbDefaultFilename);
 		startStopButton = (Button) mainFragmentView.findViewById(R.id.btStartstop);
+		defaultFilenameCheckBox.setChecked(true);
 		cpuTempCheckBox.setOnClickListener(this);
 		batteryCheckBox.setOnClickListener(this);
 		cpuFreqCheckBox.setOnClickListener(this);
 		startStopButton.setOnClickListener(this);
 		defaultFilenameCheckBox.setOnClickListener(this);
-		defaultFilenameCheckBox.setChecked(true);
 	}
 	
 	@Override
@@ -98,10 +98,11 @@ public class MainFragment extends Fragment implements OnClickListener {
         		break;
         	case R.id.cbDefaultFilename:
         		if (defaultFilenameCheckBox.isChecked()) {
+        			savedFilename = csvFilenameBox.getText().toString();
         			csvFilenameBox.setText(generateCsvName());
         			csvFilenameBox.setEnabled(false);
         		} else {
-        			csvFilenameBox.setText("");
+        			csvFilenameBox.setText(savedFilename);
         			csvFilenameBox.setEnabled(true);
         		}
         		break;
