@@ -58,7 +58,7 @@ public class SensorDataCollector implements Runnable {
 			String[] entries = "DateTime,Cpu Temp,Cpu0 Freq,Cpu1 Freq,Cpu2 Freq,Cpu3 Freq,Cpu4 Freq,Cpu5 Freq,Cpu6 Freq,Cpu7 Freq,Batt Lvl".split(",");
 			writer.writeNext(entries);
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			double[] cpuFreq;
 			
 			while (isRunning) {

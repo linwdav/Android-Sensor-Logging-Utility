@@ -227,14 +227,12 @@ public class MainFragment extends Fragment implements OnClickListener {
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
 		int minute = cal.get(Calendar.MINUTE);
 		int second = cal.get(Calendar.SECOND);
-		long millisecond = System.currentTimeMillis() % 1000;
 		
 		String monthString = String.valueOf(month);
 		String dayString = String.valueOf(day);
 		String hourString = String.valueOf(hour);
 		String minuteString = String.valueOf(minute);
 		String secondString = String.valueOf(second);
-		String millisecondString = String.valueOf(millisecond);
 		
 		if (month < 10) {
 			monthString = "0" + month;
@@ -252,7 +250,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 			secondString = "0" + second;
 		}
 		
-		String csvName = "sensorlog_" + year + monthString + dayString + "_" + hourString + minuteString + secondString + "_" + millisecondString + ".csv";
+		String csvName = "sensorlog_" + year + monthString + dayString + "_" + hourString + minuteString + secondString + ".csv";
 		return csvName;
 	}
 	
