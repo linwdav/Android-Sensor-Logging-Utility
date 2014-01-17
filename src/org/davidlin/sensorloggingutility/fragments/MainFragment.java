@@ -35,6 +35,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 	private CheckBox cpuTempCheckBox;
 	private CheckBox batteryCheckBox;
 	private CheckBox cpuFreqCheckBox;
+	private CheckBox defaultFilenameCheckBox;
 	private EditText csvFilenameBox;
 	private EditText sampleRateBox;
 	private View mainFragmentView;
@@ -61,11 +62,14 @@ public class MainFragment extends Fragment implements OnClickListener {
 		cpuTempCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbCputemp);
 		batteryCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbBattery);
 		cpuFreqCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbCpufreq);
+		defaultFilenameCheckBox = (CheckBox) mainFragmentView.findViewById(R.id.cbDefaultFilename);
 		startStopButton = (Button) mainFragmentView.findViewById(R.id.btStartstop);
 		cpuTempCheckBox.setOnClickListener(this);
 		batteryCheckBox.setOnClickListener(this);
 		cpuFreqCheckBox.setOnClickListener(this);
 		startStopButton.setOnClickListener(this);
+		defaultFilenameCheckBox.setOnClickListener(this);
+		defaultFilenameCheckBox.setChecked(true);
 	}
 	
 	@Override
@@ -91,6 +95,15 @@ public class MainFragment extends Fragment implements OnClickListener {
 				} else {
 					isCpufreqSelected = false;
 				}
+        		break;
+        	case R.id.cbDefaultFilename:
+        		if (defaultFilenameCheckBox.isChecked()) {
+        			csvFilenameBox.setText(generateCsvName());
+        			csvFilenameBox.setEnabled(false);
+        		} else {
+        			csvFilenameBox.setText("");
+        			csvFilenameBox.setEnabled(true);
+        		}
         		break;
         	case R.id.btStartstop:
         		if (sdc == null && dataCollectorThread == null) {
@@ -150,11 +163,14 @@ public class MainFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 	    super.onResume();
- 		if (sdc == null && dataCollectorThread == null) {			
+ 		if (sdc == null && dataCollectorThread == null) {
  			// Set default csv filename
- 		 	csvFilenameBox = (EditText) mainFragmentView.findViewById(R.id.etCsvfilename);
- 		 	csvFilenameBox.setText(generateCsvName());
- 		 		
+ 			if (defaultFilenameCheckBox.isChecked()) {
+	 		 	csvFilenameBox = (EditText) mainFragmentView.findViewById(R.id.etCsvfilename);
+	 		 	csvFilenameBox.setText(generateCsvName());
+	 		 	csvFilenameBox.setEnabled(false);
+ 			}
+ 		 	
  	 		// Set default sample rate
  	 		sampleRateBox = (EditText) mainFragmentView.findViewById(R.id.etSamplerate);
  	 		sampleRateBox.setText(String.valueOf(SAMPLE_RATE));
@@ -185,6 +201,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 		cpuTempCheckBox.setEnabled(false);
 		cpuFreqCheckBox.setEnabled(false);
 		batteryCheckBox.setEnabled(false);
+		defaultFilenameCheckBox.setEnabled(false);
 		sampleRateBox.setEnabled(false);
 		csvFilenameBox.setEnabled(false);
 	}
@@ -193,6 +210,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 		cpuTempCheckBox.setEnabled(true);
 		cpuFreqCheckBox.setEnabled(true);
 		batteryCheckBox.setEnabled(true);
+		defaultFilenameCheckBox.setEnabled(true);
 		sampleRateBox.setEnabled(true);
 		csvFilenameBox.setEnabled(true);
 	}

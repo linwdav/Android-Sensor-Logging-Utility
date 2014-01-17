@@ -79,17 +79,6 @@
 	        android:textAppearance="?android:attr/textAppearanceMedium"
 	        android:textStyle="bold" />
 	
-	    <Button
-	        android:id="@+id/btStartstop"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/etCsvfilename"
-	        android:layout_centerHorizontal="true"
-	        android:layout_margin="20dp"
-	        android:minWidth="100dp"
-	        android:text="Start"
-	        android:textStyle="bold" />
-	
 	    <EditText
 	        android:id="@+id/etSamplerate"
 	        android:layout_width="wrap_content"
@@ -129,6 +118,26 @@
 	        android:layout_marginTop="14dp"
 	        android:text="Sampling rate"
 	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textStyle="bold" />
+
+	    <CheckBox
+	        android:id="@+id/cbDefaultFilename"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/etCsvfilename"
+	        android:layout_below="@+id/etCsvfilename"
+	        android:text="Use default filename"
+	        android:textSize="10sp" />
+	    
+	    <Button
+	        android:id="@+id/btStartstop"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/cbDefaultFilename"
+	        android:layout_centerHorizontal="true"
+	        android:layout_margin="20dp"
+	        android:minWidth="100dp"
+	        android:text="Start"
 	        android:textStyle="bold" />
 	
 	</RelativeLayout>
