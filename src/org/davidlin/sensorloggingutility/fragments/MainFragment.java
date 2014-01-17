@@ -108,44 +108,44 @@ public class MainFragment extends Fragment implements OnClickListener {
         		break;
         	case R.id.btStartstop:
         		if (sdc == null && dataCollectorThread == null) {
+        			savedFilename = csvFilenameBox.getText().toString();
+        			if (savedFilename.isEmpty()) {
+        				showToast("Type in filename", Toast.LENGTH_LONG);
+    					break;
+        			}
+        			
+					// Convert samples per second into milliseconds
+					double desiredSampleRate = Double.valueOf(sampleRateBox.getText().toString());
+					if (desiredSampleRate <= 0) {
+						showToast("Sample rate must be greater than 0", Toast.LENGTH_LONG);
+    					break;
+					}
+					int sampleRate = (int) (1000 / desiredSampleRate);
+					
 					disableOptions();
 					// Set button text to Stop
 					startStopButton.setText(STOP);
 					// Turn fragment background Red
 					mainFragmentView.findViewById(R.id.fragment_main).setBackgroundColor(Color.RED);
-					// Convert samples per second into milliseconds
-					double desiredSampleRate = Double.valueOf(sampleRateBox.getText().toString());
-					if (desiredSampleRate <= 0) {
-						// Throw error
-					}
-					int sampleRate = (int) (1000 / desiredSampleRate);
-					savedFilename = csvFilenameBox.getText().toString();
+					
 					sdc = new SensorDataCollector(context, sampleRate, savedFilename, isCputempSelected, isCpufreqSelected, isBatterySelected);
-					sdc.isRunning = true;
 					dataCollectorThread = new Thread(sdc);
 					dataCollectorThread.start();
-					Toast toast = Toast.makeText(context, "Writing data to " + savedFilename, Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.BOTTOM, 0, 0);
-					toast.setDuration(Toast.LENGTH_LONG);
-					toast.show();
+					showToast("Writing data to " + savedFilename, Toast.LENGTH_LONG);
 					
 					addNotification();
 				} else {
 					// Set button text to Start
 					startStopButton.setText(START);
 					// Turn fragment background White
-					mainFragmentView.findViewById(R.id.fragment_main).setBackgroundColor(Color.WHITE);
-					sdc.isRunning = false;
+					mainFragmentView.findViewById(R.id.fragment_main).setBackgroundColor(0x00000000);
 					try {
 						sdc.stop();
 						dataCollectorThread.join();
 						sdc = null;
 						dataCollectorThread = null;
 						
-						Toast toast = Toast.makeText(context, "Data saved to " + savedFilename, Toast.LENGTH_SHORT);
-						toast.setGravity(Gravity.BOTTOM, 0, 0);
-						toast.setDuration(Toast.LENGTH_LONG);
-						toast.show();
+						showToast("Data saved to " + savedFilename, Toast.LENGTH_LONG);
 						
 						// Set default csv filename
 			 		 	csvFilenameBox = (EditText) mainFragmentView.findViewById(R.id.etCsvfilename);
@@ -252,6 +252,13 @@ public class MainFragment extends Fragment implements OnClickListener {
 		
 		String csvName = "sensorlog_" + year + monthString + dayString + "_" + hourString + minuteString + secondString + ".csv";
 		return csvName;
+	}
+	
+	// Helper method
+	private void showToast(String message, int length) {
+		Toast toast = Toast.makeText(context, message, length);
+		toast.setGravity(Gravity.BOTTOM, 0, 0);
+		toast.show();
 	}
 	
 }

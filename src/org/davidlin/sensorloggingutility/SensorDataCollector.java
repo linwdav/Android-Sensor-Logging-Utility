@@ -21,7 +21,7 @@ public class SensorDataCollector implements Runnable {
 
 	private static final int MAX_CORES = 8;
 
-	public volatile boolean isRunning = false;
+	private volatile boolean isRunning = false;
 	private final Object lockObj = new Object();
 
 	private int sampleRate;
@@ -60,6 +60,7 @@ public class SensorDataCollector implements Runnable {
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			double[] cpuFreq;
+			isRunning = true;
 			
 			while (isRunning) {
 				Log.d("org.davidlin.sensor", "Executing data collecting loop");
@@ -108,6 +109,7 @@ public class SensorDataCollector implements Runnable {
 	
 	public void stop() {
 		synchronized(lockObj) {
+			isRunning = false;
 			lockObj.notify();
 		}
 	}
