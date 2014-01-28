@@ -10,6 +10,7 @@ import org.davidlin.sensorloggingutility.fragments.SetFreqFragment;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -75,6 +76,11 @@ public class MainActivity extends FragmentActivity {
 		actionBar.addTab(actionBar.newTab().setText("MAIN").setTabListener(tabListener));
 		actionBar.addTab(actionBar.newTab().setText("SET FREQ").setTabListener(tabListener));
 		actionBar.addTab(actionBar.newTab().setText("SCRIPT").setTabListener(tabListener));
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
 	}
 
 }

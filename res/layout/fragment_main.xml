@@ -12,8 +12,8 @@
 	        android:id="@+id/cbCputemp"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignLeft="@+id/textView1"
-	        android:layout_below="@+id/textView1"
+	        android:layout_alignLeft="@+id/tvShellOutput"
+	        android:layout_below="@+id/tvShellOutput"
 	        android:layout_marginLeft="21dp"
 	        android:layout_marginTop="14dp"
 	        android:text="CPU temperature" />
@@ -70,7 +70,7 @@
 	    </EditText>
 	
 	    <TextView
-	        android:id="@+id/textView1"
+	        android:id="@+id/tvShellOutput"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
